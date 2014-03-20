@@ -54,6 +54,10 @@ module NewRelicResqueAgent
       end
     end
 
+    def instance_label_proc_method
+      "Resque"
+    end
+
   end
   
   # Register and run the agent
