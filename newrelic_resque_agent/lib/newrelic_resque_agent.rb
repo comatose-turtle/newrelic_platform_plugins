@@ -42,7 +42,10 @@ module NewRelicResqueAgent
         report_metric "Jobs/Rate/Failed", "Jobs/Second",           @total_failed.process(info[:failed])
         report_metric "Queues", "Queues",                     info[:queues]
         report_metric "Jobs/Failed", "Jobs",                  info[:failed] || 0
-        
+
+        Resque.queues.each do |queue|
+          report_metric "Jobs/Pending/#{queue.capitalize}", "Jobs",  Resque.size(queue)
+        end
         
 
       rescue Redis::TimeoutError
